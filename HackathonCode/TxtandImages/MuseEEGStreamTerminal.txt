@@ -1,0 +1,63 @@
+Last login: Sat Nov 16 22:46:06 on ttys009
+(base) loganhindley@Logans-MacBook-Pro-3 ~ % cd /Users/loganhindley/Documents/natHacks24/backend
+(base) loganhindley@Logans-MacBook-Pro-3 backend % python backend.py
+[2024-11-16 22:48:33] Starting the Flask server on port 5001...
+[2024-11-16 22:48:35] Serving the index page...
+[2024-11-16 22:48:39] Received start recording command for duration: 30 seconds
+[2024-11-16 22:48:39] Started Muse data stream process.
+[2024-11-16 22:48:39] Starting Muse data stream...
+[2024-11-16 22:48:39] Started muselsl stream process.
+2024-11-16 22:48:44.370 (  10.530s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'lo0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.371 (  10.530s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'lo0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.371 (  10.531s) [          5F61CE]      netinterfaces.cpp:102   INFO| 	IPv4 addr: 7f000001
+2024-11-16 22:48:44.372 (  10.531s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'lo0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.372 (  10.531s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: ::1
+2024-11-16 22:48:44.372 (  10.531s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'lo0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.373 (  10.532s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::1%lo0
+2024-11-16 22:48:44.373 (  10.532s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'gif0' (status: 0, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.373 (  10.532s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'stf0' (status: 0, multicast: 0, broadcast: 0)
+2024-11-16 22:48:44.373 (  10.533s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'anpi0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.374 (  10.533s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'anpi1' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.374 (  10.533s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'anpi2' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.374 (  10.533s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en4' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.374 (  10.534s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en5' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.375 (  10.534s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en6' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.375 (  10.534s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en1' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.375 (  10.534s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en2' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.375 (  10.534s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en3' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.376 (  10.535s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'bridge0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.376 (  10.535s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'ap1' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.376 (  10.535s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.376 (  10.535s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.377 (  10.536s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::10d5:e0c0:f04d:ec43%en0
+2024-11-16 22:48:44.377 (  10.536s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'en0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.377 (  10.536s) [          5F61CE]      netinterfaces.cpp:102   INFO| 	IPv4 addr: ac1beb87
+2024-11-16 22:48:44.378 (  10.537s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'awdl0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.378 (  10.537s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'awdl0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.379 (  10.538s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::74b6:61ff:fe87:467c%awdl0
+2024-11-16 22:48:44.379 (  10.538s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'llw0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.379 (  10.538s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'llw0' (status: 1, multicast: 32768, broadcast: 2)
+2024-11-16 22:48:44.380 (  10.539s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::74b6:61ff:fe87:467c%llw0
+2024-11-16 22:48:44.380 (  10.539s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.380 (  10.539s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun0' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.381 (  10.540s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::be7d:8bc9:de61:5de3%utun0
+2024-11-16 22:48:44.381 (  10.540s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun1' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.381 (  10.540s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun1' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.382 (  10.541s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::de37:76e2:6e5:dbd7%utun1
+2024-11-16 22:48:44.382 (  10.541s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun2' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.382 (  10.541s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun2' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.382 (  10.541s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::f30c:ca5:a34:4eb2%utun2
+2024-11-16 22:48:44.383 (  10.542s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun3' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.383 (  10.542s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun3' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.383 (  10.542s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::ce81:b1c:bd2c:69e%utun3
+2024-11-16 22:48:44.383 (  10.542s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun4' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.384 (  10.543s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun4' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.384 (  10.543s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::8f46:676b:2450:bcf9%utun4
+2024-11-16 22:48:44.384 (  10.543s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun5' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.384 (  10.543s) [          5F61CE]      netinterfaces.cpp:91    INFO| netif 'utun5' (status: 1, multicast: 32768, broadcast: 0)
+2024-11-16 22:48:44.384 (  10.544s) [          5F61CE]      netinterfaces.cpp:105   INFO| 	IPv6 addr: fe80::38b:5038:7b75:b7f5%utun5
+2024-11-16 22:48:44.385 (  10.544s) [          5F61CE]         api_config.cpp:271   INFO| Loaded default config
+2024-11-16 22:48:50.990 (  17.150s) [          5F61CE]             common.cpp:66    INFO| git:v1.16.2-34-g7e61a2ef/branch:master/build:Release/compiler:AppleClang-16.0.0.16000026/link:SHARED
+[2024-11-16 22:48:50] Connected to EEG stream.
+[2024-11-16 22:49:09] Recording session ended.
+

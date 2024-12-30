@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live EEG Data Streaming</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .loading-bar {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 20px;
+        }
+        #progressBar {
+            height: 100%;
+            width: 0;
+            background: #4caf50;
+        }
+        .graph-container {
+            position: relative;
+            height: 400px;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <!-- Include Socket.IO client script -->
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Live EEG Data Streaming</h1>
+
+        <!-- Start Recording Controls -->
+        <div class="controls">
+            <input type="number" id="durationInput" placeholder="Duration (seconds)" min="1">
+            <button onclick="startRecording()">Start Recording</button>
+        </div>
+
+        <!-- Status Display -->
+        <div id="statusDisplay">Status: Not recording</div>
+
+        <!-- Loading Bar -->
+        <div class="loading-bar">
+            <div id="progressBar"></div>
+        </div>
+
+        <!-- EEG Data Chart -->
+        <div class="graph-container">
+            <canvas id="eegChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Connect to the Socket.IO server
+        var socket = io.connect('http://localhost:5001');
+    
+        var recordingDuration = 0;
+        var isRecording = false;
+        var recordingStartTime = null;
+        var recordingInterval = null;
+    
+        // Initialize Chart.js
+        var ctx = document.getElementById('eegChart').getContext('2d');
+        var eegData = {
+            datasets: [{
+                label: 'EEG Data (Channel 1)',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: false,
+                tension: 0
+            }]
+        };
+    
+        var eegChart = new Chart(ctx, {
+            type: 'line',
+            data: eegData,
+            options: {
+                animation: false,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'Time (s)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'EEG Signal'
+                        }
+                    }
+                }
+            }
+        });
+    
+        // Handle the Start Recording button click
+        function startRecording() {
+            var durationInput = document.getElementById('durationInput');
+            var duration = parseInt(durationInput.value);
+            if (isNaN(duration) || duration < 1) {
+                alert('Please enter a valid duration in seconds.');
+                return;
+            }
+            recordingDuration = duration;
+            updateStatusDisplay('Connecting to Muse...');
+            socket.emit('start_recording', { 'duration': duration });
+        }
+    
+        // Update status display function
+        function updateStatusDisplay(message) {
+            var statusDisplay = document.getElementById('statusDisplay');
+            statusDisplay.textContent = 'Status: ' + message;
+        }
+    
+        // Start the recording timer function
+        function startRecordingTimer() {
+            recordingStartTime = Date.now();
+            var endTime = recordingStartTime + recordingDuration * 1000;
+    
+            recordingInterval = setInterval(function () {
+                var currentTime = Date.now();
+                var timeLeft = Math.max(0, Math.floor((endTime - currentTime) / 1000));
+                updateStatusDisplay('Recording... ' + timeLeft + 's remaining');
+    
+                // Update progress bar
+                var progressBar = document.getElementById('progressBar');
+                var totalTime = recordingDuration * 1000;
+                var elapsed = currentTime - recordingStartTime;
+                var width = Math.min(100, (elapsed / totalTime) * 100);
+                progressBar.style.width = width + '%';
+    
+                if (timeLeft <= 0) {
+                    clearInterval(recordingInterval);
+                }
+            }, 500);
+        }
+    
+        // Stop the recording timer function
+        function stopRecordingTimer() {
+            clearInterval(recordingInterval);
+            var progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+        }
+    
+        // Socket.IO event handlers
+        socket.on('connect', function () {
+            console.log('Socket.IO connection established.');
+            updateStatusDisplay('Connected to server. Ready to start recording.');
+        });
+    
+        socket.on('eeg_data', function (data) {
+            if (isRecording) {
+                var timestamp = (Date.now() - recordingStartTime) / 1000;
+                eegData.datasets[0].data.push({
+                    x: timestamp,
+                    y: data
+                });
+                eegChart.update();
+            }
+        });
+    
+        socket.on('progress', function (progress) {
+            var progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+        });
+    
+        socket.on('recording_complete', function () {
+            console.log('Recording session ended.');
+            isRecording = false;
+            updateStatusDisplay('Recording finished.');
+            stopRecordingTimer();
+        });
+    
+        socket.on('status', function (msg) {
+            console.log('Status update:', msg.message);
+            updateStatusDisplay(msg.message);
+        });
+    
+        socket.on('error', function (error) {
+            console.error('Error received:', error);
+            updateStatusDisplay('Error: ' + error.message);
+        });
+    </script>
+</body>
+</html>

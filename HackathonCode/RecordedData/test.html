@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live EEG Data Streaming</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/muse-js@latest"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Live EEG Data Streaming</h1>
+        <div class="description">
+            <h3>Understanding Brain Waves:</h3>
+            <ul>
+                <li><strong>Delta:</strong> Deep sleep, restorative, unconscious activities.</li>
+                <li><strong>Theta:</strong> Light sleep, meditation, creativity, and intuition.</li>
+                <li><strong>Alpha:</strong> Calm, relaxation, awake but relaxed.</li>
+                <li><strong>Beta:</strong> Active thinking, problem solving, alertness, concentration.</li>
+                <li><strong>Gamma:</strong> High-level mental functioning, learning, focus, problem-solving.</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <label for="duration">Enter recording duration (seconds):</label>
+            <input type="number" id="duration" min="1" value="10">
+            <button id="startRecording">Start Recording</button>
+        </div>
+
+        <div class="loading-bar">
+            <div id="progressBar"></div>
+        </div>
+
+        <div class="graph-container">
+            <canvas id="eegGraph"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const socket = io.connect('http://localhost:5000');
+        const startButton = document.getElementById('startRecording');
+        const progressBar = document.getElementById('progressBar');
+        const durationInput = document.getElementById('duration');
+        const ctx = document.getElementById('eegGraph').getContext('2d');
+        let chart;
+
+        startButton.addEventListener('click', () => {
+            const duration = parseInt(durationInput.value) * 1000;
+            if (isNaN(duration) || duration <= 0) {
+                alert("Please enter a valid duration.");
+                return;
+            }
+            
+            socket.emit('start_recording', { 'duration': duration / 1000 });
+            startEEGRecording(duration);
+        });
+
+        function startEEGRecording(duration) {
+            progressBar.style.width = '0%';
+            let startTime = Date.now();
+
+            // Loading bar animation
+            const interval = setInterval(() => {
+                let elapsedTime = Date.now() - startTime;
+                let progress = Math.min(100, (elapsedTime / duration) * 100);
+                progressBar.style.width = progress + '%';
+
+                if (elapsedTime >= duration) {
+                    clearInterval(interval);
+                }
+            }, 100);
+
+            // Set up Chart.js for EEG graph
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'EEG Data',
+                        data: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'realtime',
+                            realtime: {
+                                delay: 2000,
+                                onRefresh: function(chart) {
+                                    // This will be updated with EEG data from socket
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            setTimeout(() => {
+                clearInterval(interval);
+                alert("Recording finished");
+            }, duration);
+        }
+
+        // Listening for incoming EEG data from server
+        socket.on('new_eeg_data', function(data) {
+            const currentTime = new Date().toLocaleTimeString();
+            chart.data.labels.push(currentTime);
+            chart.data.datasets[0].data.push(data.data);
+            chart.update();
+        });
+    </script>
+</body>
+</html>
